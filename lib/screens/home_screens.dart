@@ -273,7 +273,7 @@ class EventWidgetStatic extends StatelessWidget {
     return Card(
       margin: const EdgeInsets.symmetric(vertical: 20),
       elevation: 4,
-      color: Colors.white,
+      color: Colors.red,
       shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(24))),
       child: Padding(

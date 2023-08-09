@@ -35,12 +35,12 @@ class TicketData extends StatelessWidget {
               height: 25.0,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(30.0),
-                border: Border.all(width: 1.0, color: Colors.green),
+                border: Border.all(width: 1.0, color: Colors.red),
               ),
               child: const Center(
                 child: Text(
                   'Business Class',
-                  style: TextStyle(color: Colors.green),
+                  style: TextStyle(color: Colors.red),
                 ),
               ),
             ),
@@ -54,7 +54,7 @@ class TicketData extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.only(left: 8.0),
                   child: Icon(
-                    Icons.flight_takeoff,
+                    Icons.monetization_on,
                     color: Colors.pink,
                   ),
                 ),
@@ -117,7 +117,7 @@ class TicketData extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 30),
-        Text('         Developer: instagram.com/DholaSain')
+        Text('         Developer: instagram.com/tickst_so')
       ],
     );
   }
