@@ -1,20 +1,78 @@
+import 'package:blckchain_movile/models/ticket.dart';
+import 'package:blckchain_movile/services/evento_service.dart';
 import 'package:flutter/material.dart';
 import 'package:ticket_widget/ticket_widget.dart';
 
 class EventDetailsPage extends StatelessWidget {
+  const EventDetailsPage(
+      {super.key,
+      required this.idEvento,
+      required this.idUser,
+      required this.eventoService});
+
+  final String idEvento;
+  final String idUser;
+  final EventoService eventoService;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Detalles del Evento"),
+        backgroundColor: Colors.redAccent,
+        title: const Text("Detalles del Evento"),
       ),
       body: Center(
-        child: TicketWidget(
-          width: 350,
-          height: 500,
-          isCornerRounded: true,
-          padding: EdgeInsets.all(20),
-          child: TicketData(),
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: FutureBuilder<List<Ticket>>(
+            future: eventoService.getTiket(idUser, idEvento),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(
+                  child: CircularProgressIndicator(
+                    color: Colors.redAccent,
+                  ),
+                );
+              } else if (snapshot.hasError) {
+                return const Center(
+                  child: Text('Error al cargar los datos'),
+                );
+              } else if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+                return ListView.builder(
+                  itemCount: snapshot.data!.length,
+                  itemBuilder: (context, index) {
+                    final Ticket item = snapshot.data![index];
+
+                    Color ticketColor = Colors.blue; // Color por defecto
+
+                    if (item.tipo == "oro") {
+                      ticketColor = Colors.orange;
+                    } else if (item.tipo == "plata") {
+                      ticketColor = Colors.grey;
+                    } else if (item.tipo == "bronce") {
+                      ticketColor = const Color.fromARGB(255, 204, 98, 60);
+                    }
+
+                    return TicketWidget(
+                      color: ticketColor,
+                      width: 350,
+                      height: 500,
+                      isCornerRounded: true,
+                      padding: const EdgeInsets.all(20),
+                      child: TicketData(
+                        precio: item.precio.toString(),
+                        tipo: item.tipo,
+                      ),
+                    );
+                  },
+                );
+              } else {
+                return const Center(
+                  child: Text('No se encontraron eventos.'),
+                );
+              }
+            },
+          ),
         ),
       ),
     );
@@ -22,6 +80,9 @@ class EventDetailsPage extends StatelessWidget {
 }
 
 class TicketData extends StatelessWidget {
+  const TicketData({super.key, required this.precio, required this.tipo});
+  final String precio;
+  final String tipo;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -37,10 +98,10 @@ class TicketData extends StatelessWidget {
                 borderRadius: BorderRadius.circular(30.0),
                 border: Border.all(width: 1.0, color: Colors.red),
               ),
-              child: const Center(
+              child: Center(
                 child: Text(
-                  'Business Class',
-                  style: TextStyle(color: Colors.red),
+                  tipo,
+                  style: const TextStyle(color: Colors.red),
                 ),
               ),
             ),
@@ -73,9 +134,9 @@ class TicketData extends StatelessWidget {
         const Padding(
           padding: EdgeInsets.only(top: 20.0),
           child: Text(
-            'Flight Ticket',
+            'Nombre del evento',
             style: TextStyle(
-                color: Colors.black,
+                color: Color.fromARGB(255, 0, 0, 0),
                 fontSize: 20.0,
                 fontWeight: FontWeight.bold),
           ),
@@ -84,8 +145,7 @@ class TicketData extends StatelessWidget {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            ticketDetailsWidget(
-                'Passengers', 'Hafiz M Mujahid', 'Date', '28-08-2022'),
+            ticketDetailsWidget('Precio', '$precio bs', 'Date', '28-08-2022'),
             Padding(
               padding: const EdgeInsets.only(top: 12.0, right: 52.0),
               child: ticketDetailsWidget('Flight', '76836A45', 'Gate', '66B'),
@@ -103,8 +163,7 @@ class TicketData extends StatelessWidget {
             height: 60.0,
             decoration: const BoxDecoration(
                 image: DecorationImage(
-                    image: AssetImage('assets/barcode.png'),
-                    fit: BoxFit.cover)),
+                    image: AssetImage('assets/barra.png'), fit: BoxFit.cover)),
           ),
         ),
         const Padding(
@@ -117,7 +176,7 @@ class TicketData extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 30),
-        Text('         Developer: instagram.com/tickst_so')
+        const Text('         Developer: instagram.com/tickst_so')
       ],
     );
   }

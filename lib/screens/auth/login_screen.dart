@@ -43,14 +43,14 @@ class _LoginScreenState extends State<LoginScreen> {
                         fit: BoxFit.cover,
                       ),
                       const Text(
-                        'Clinica Melendres',
+                        'ClipTicket',
                         style: TextStyle(
                           fontSize: 36,
                           fontWeight: FontWeight.w700,
                         ),
                       ),
                       const SizedBox(height: 10),
-                      const Text('Siempre cuidando de tu plata!'),
+                      const Text('Siempre cuidando de tu privacidad!'),
                       const SizedBox(height: 26),
                       Container(
                         decoration: BoxDecoration(
@@ -105,7 +105,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             },
                           ),
                         ),
-                      ),
+                    ),
                       const SizedBox(height: 22),
                       Row(
                         children: [

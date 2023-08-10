@@ -26,7 +26,7 @@ class CheckAuthScreen extends StatelessWidget {
                     Navigator.pushAndRemoveUntil(
                       context,
                       MaterialPageRoute(
-                        builder: (_) => const HomeScreen(),
+                        builder: (_) => HomeScreen(idUser: user.id.toString()),
                       ),
                       (route) => false,
                     );
@@ -40,8 +40,8 @@ class CheckAuthScreen extends StatelessWidget {
               return const Scaffold(
                 body: Center(
                   child: CupertinoActivityIndicator(
-                    color: Color(0xFF05539A),
-                    radius: 20,
+                    color: Colors.redAccent,
+                    radius: 30,
                   ),
                 ),
               );

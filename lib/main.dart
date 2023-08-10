@@ -1,4 +1,5 @@
 import 'package:blckchain_movile/screens/screens.dart';
+
 import 'package:blckchain_movile/services/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -11,6 +12,7 @@ void main() async {
 }
 
 class AppState extends StatelessWidget {
+  
   const AppState({
     super.key,
   });
@@ -19,6 +21,7 @@ class AppState extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(providers: [
       ChangeNotifierProvider(create: (_) => AuthService()),
+      ChangeNotifierProvider(create: (_) => EventoService()),
     ], child: const MyApp());
   }
 }
@@ -40,5 +43,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-
